@@ -16,7 +16,7 @@
       "executable/server"
     ],
     "targets": [
-      "node16-linux-arm64"  // 为 ARM64 架构设备添加目标
+      "node16-linux-arm64"
     ],
     "outputPath": "binary"
   },
