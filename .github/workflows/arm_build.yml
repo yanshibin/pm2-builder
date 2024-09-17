@@ -31,7 +31,7 @@ jobs:
         npm run pkg  # 运行 pkg 打包二进制文件
 
     - name: Upload binary artifact
-      uses: actions/upload-artifact@v2  # 将二进制文件作为构建产物上传
+      uses: actions/upload-artifact@v3  # 更新为 v3 版本上传二进制文件
       with:
         name: pm2-builder-binary
         path: ./binary/  # 指定上传路径
