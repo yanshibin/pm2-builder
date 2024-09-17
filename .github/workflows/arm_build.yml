@@ -24,14 +24,14 @@ jobs:
     - name: Install dependencies
       run: npm install  # 安装项目的依赖
 
+    - name: Install pkg globally
+      run: npm install -g pkg  # 全局安装 pkg 工具
+
     - name: Build project for ARM64
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y pkg  # 安装 pkg 工具
-        npm run pkg  # 运行 pkg 打包二进制文件
+      run: npm run pkg  # 运行 pkg 打包二进制文件
 
     - name: Upload binary artifact
-      uses: actions/upload-artifact@v3  # 更新为 v3 版本上传二进制文件
+      uses: actions/upload-artifact@v3  # 使用 v3 上传二进制文件
       with:
         name: pm2-builder-binary
         path: ./binary/  # 指定上传路径
