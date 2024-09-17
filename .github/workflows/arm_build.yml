@@ -1,37 +1,32 @@
-name: Build for ARM64
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main  # 当推送到 main 分支时触发
+      - main
   pull_request:
     branches:
-      - main  # 当有 pull request 到 main 分支时触发
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 作为运行环境
-
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2  # 检出代码仓库
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v2  # 设置 Node.js 环境
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        node-version: 16  # 使用 Node.js 16 版本
-
+        node-version: '16'
     - name: Install dependencies
-      run: npm install  # 安装项目的依赖
-
-    - name: Install pkg globally
-      run: npm install -g pkg  # 全局安装 pkg 工具
-
-    - name: Build project for ARM64
-      run: npm run pkg  # 运行 pkg 打包二进制文件
-
-    - name: Upload binary artifact
-      uses: actions/upload-artifact@v3  # 使用 v3 上传二进制文件
+      run: npm install
+    - name: Build with ncc
+      run: npm run ncc
+    - name: Package with pkg
+      run: npm run pkg
+    - name: Test the application
+      run: npm run start
+    - name: Upload binary
+      uses: actions/upload-artifact@v3
       with:
         name: pm2-builder-binary
-        path: ./binary/  # 指定上传路径
+        path: ./binary/
