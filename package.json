@@ -16,7 +16,7 @@
       "executable/server"
     ],
     "scripts": [
-      "@pm2/agent/src/InteractorClient"  // 手动包含此模块
+      "@pm2/agent/src/InteractorClient"
     ],
     "targets": [
       "node16-linux-arm64"
