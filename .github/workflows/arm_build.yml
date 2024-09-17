@@ -1,0 +1,42 @@
+name: Build for ARM
+
+on:
+  push:
+    branches:
+      - main  # 触发构建的分支
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16]  # 选择 Node.js 版本
+        arch: [arm64]  # 架构，支持 arm64
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project for ARM
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pkg  # 安装 pkg 打包工具
+        npm run pkg  # 执行打包
+
+    - name: Upload binary artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: pm2-builder-binary
+        path: ./binary/  # 上传打包生成的二进制文件
