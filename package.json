@@ -14,7 +14,8 @@
   "pkg": {
     "assets": [
       "executable/server",
-      "node_modules/@pm2/agent/src/**/*"
+      "node_modules/@pm2/**/*",
+      "node_modules/pm2/**/*"
     ],
     "targets": [
       "node16-linux-arm64"
