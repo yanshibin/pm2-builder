@@ -1,30 +1,21 @@
 {
   "name": "pm2-builder",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "bin": "index.js",
   "scripts": {
-    "ncc": "ncc build ./index.js",
-    "server": "export DATABASE_URL=\"file:$(pwd)/dev.db\" && ./executable/server",
-    "binary": "export DATABASE_URL=\"file:$(pwd)/dev.db\" && ./binary/pm2-builder",
-    "pkg": "pkg .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ncc": "ncc build ./index.js -o dist",
+    "pkg": "pkg dist/index.js --targets node16-linux-arm64 --output ./binary/pm2-builder",
+    "start": "node ./binary/pm2-builder"
   },
   "pkg": {
     "assets": [
-      "executable/server",
-      "node_modules/@pm2/**/*",
-      "node_modules/pm2/**/*"
+      "./executable/**/*"
     ],
     "targets": [
       "node16-linux-arm64"
     ],
-    "outputPath": "binary"
+    "output": "./binary/pm2-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "pm2": "^5.3.0"
   }
