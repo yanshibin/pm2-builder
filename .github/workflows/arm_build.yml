@@ -1,42 +1,37 @@
-name: Build for ARM
+name: Build for ARM64
 
 on:
   push:
     branches:
-      - main  # 触发构建的分支
+      - main  # 当推送到 main 分支时触发
   pull_request:
     branches:
-      - main
+      - main  # 当有 pull request 到 main 分支时触发
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16]  # 选择 Node.js 版本
-        arch: [arm64]  # 架构，支持 arm64
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 作为运行环境
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # 检出代码仓库
 
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v2  # 设置 Node.js 环境
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16  # 使用 Node.js 16 版本
 
     - name: Install dependencies
-      run: npm install
+      run: npm install  # 安装项目的依赖
 
-    - name: Build project for ARM
+    - name: Build project for ARM64
       run: |
         sudo apt-get update
-        sudo apt-get install -y pkg  # 安装 pkg 打包工具
-        npm run pkg  # 执行打包
+        sudo apt-get install -y pkg  # 安装 pkg 工具
+        npm run pkg  # 运行 pkg 打包二进制文件
 
     - name: Upload binary artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2  # 将二进制文件作为构建产物上传
       with:
         name: pm2-builder-binary
-        path: ./binary/  # 上传打包生成的二进制文件
+        path: ./binary/  # 指定上传路径
