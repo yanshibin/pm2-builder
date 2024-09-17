@@ -13,10 +13,8 @@
   },
   "pkg": {
     "assets": [
-      "executable/server"
-    ],
-    "scripts": [
-      "@pm2/agent/src/InteractorClient"
+      "executable/server",
+      "node_modules/@pm2/agent/src/**/*"
     ],
     "targets": [
       "node16-linux-arm64"
